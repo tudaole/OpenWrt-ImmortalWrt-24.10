@@ -1,4 +1,4 @@
-name: OpenWrt ImmortalWrt X64 24.10 AutoBuilder
+name: OpenWrt_2410_x64-test
 
 on:
   workflow_dispatch:
@@ -13,8 +13,8 @@ env:
   OpenWrt_ARCH: x86-64
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
-  DIY_P1_SH: immortalwrt/diy-part1.sh
-  DIY_P2_SH: immortalwrt/diy-part2.sh
+  DIY_P1_SH: immortalwrt/diy-part1-x64-test.sh
+  DIY_P2_SH: immortalwrt/diy-part2-x64-test.sh
   FILE_NAME: OpenWrt_2410_x64-test
   TZ: Asia/Shanghai
   TELEGRAM_WORK_PUSH: true
