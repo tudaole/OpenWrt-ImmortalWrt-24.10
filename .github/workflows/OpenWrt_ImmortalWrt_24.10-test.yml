@@ -15,9 +15,9 @@ env:
   CONFIG_FILE: .config
   DIY_P1_SH: immortalwrt/diy-part1.sh
   DIY_P2_SH: immortalwrt/diy-part2.sh
-  FILE_NAME: OpenWrt_2410_x64_all
+  FILE_NAME: OpenWrt_2410_x64-test
   TZ: Asia/Shanghai
-  TELEGRAM_WORK_PUSH: false
+  TELEGRAM_WORK_PUSH: true
   WECHAT_WORK_PUSH: true
 
 jobs:
@@ -140,8 +140,8 @@ jobs:
           rm -rf immortalwrt-${{ env.OpenWrt_ARCH }}-generic-kernel.bin
           rm -rf immortalwrt-${{ env.OpenWrt_ARCH }}-generic.manifest
           rm -rf immortalwrt-${{ env.OpenWrt_ARCH }}-generic-squashfs-rootfs.img.gz
-          mv immortalwrt-${{ env.OpenWrt_ARCH }}-generic-rootfs.tar.gz immortalwrt-${{ env.OpenWrt_VERSION }}-${{ env.OpenWrt_ARCH }}-generic-rootfs-${{ env.COMPILE_DATE }}.tar.gz
-          mv immortalwrt-${{ env.OpenWrt_ARCH }}-generic-squashfs-combined-efi.img.gz immortalwrt-${{ env.OpenWrt_VERSION }}-${{ env.OpenWrt_ARCH }}-generic-squashfs-combined-efi-${{ env.COMPILE_DATE }}.img.gz
+          rm -rf immortalwrt-${{ env.OpenWrt_ARCH }}-generic-rootfs.tar.gz
+          mv immortalwrt-${{ env.OpenWrt_ARCH }}-generic-squashfs-combined-efi.img.gz immortalwrt-${{ env.OpenWrt_VERSION }}-${{ env.OpenWrt_ARCH }}-${{ env.FILE_NAME }}-efi-${{ env.COMPILE_DATE }}.img.gz
           echo -e "------------------------------- 文件列表 -------------------------------"
           ls
 
