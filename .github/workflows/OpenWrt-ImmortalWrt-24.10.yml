@@ -15,7 +15,10 @@ env:
   CONFIG_FILE: .config
   DIY_P1_SH: immortalwrt/diy-part1.sh
   DIY_P2_SH: immortalwrt/diy-part2.sh
+  FILE_NAME: OpenWrt_2410_x64_all
   TZ: Asia/Shanghai
+  TELEGRAM_WORK_PUSH: false
+  WECHAT_WORK_PUSH: true
 
 jobs:
   build:
@@ -146,7 +149,7 @@ jobs:
         id: tag
         if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
-          echo "release_tag=${{ env.REPO_NAME }}_${{ env.OpenWrt_VERSION }}_${{ env.OpenWrt_ARCH }}_${{ env.COMPILE_DATE }}" >> ${GITHUB_OUTPUT}
+          echo "release_tag=${{ env.FILE_NAME }}" >> ${GITHUB_OUTPUT}
           touch release.txt
           echo "
           💻 架构: ${{ env.OpenWrt_ARCH }}
@@ -170,15 +173,64 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: steps.tag.outputs.status == 'success' && !cancelled()
         with:
-          tag_name: ${{ steps.tag.outputs.release_tag }}
+          tag_name: ${{ env.FILE_NAME }}
           token: ${{ secrets.GH_TOKEN }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
 
-      - name: 删除 Releases 旧版本
-        uses: dev-drprasad/delete-older-releases@master
+      - name: Telegram notification upload success
+        if: steps.compile.outputs.status == 'success' && env.TELEGRAM_WORK_PUSH == 'true'
+        uses: appleboy/telegram-action@master
         with:
-          keep_latest: 3
-          delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ♨️ 【${{ env.FILE_NAME }}】项目编译完成 ♨️
+            
+            💻 架构: ${{ env.OpenWrt_ARCH }}
+  
+            📂 源码: ${{ env.REPO_URL }}
+  
+            🌳 分支: ${{ env.REPO_BRANCH }}
+  
+            ⏱️ 编译时间: ${{ env.COMPILE_DATE }}
+  
+            🌐 管理地址: 192.168.1.11 , 子网掩码: 255.255.255.0
+  
+            👤 用户名: root
+  
+            🔒 密码: password 
+            
+            https://github.com/tudaole/OpenWrt-ImmortalWrt-24.10/releases/tag/${{ env.REPO_NAME }}_${{ env.OpenWrt_VERSION }}_${{ env.OpenWrt_ARCH }}
+  
+      - name: Enterprise WeChat notification upload success
+        if: steps.compile.outputs.status == 'success' && env.WECHAT_WORK_PUSH == 'true'
+        run: |
+          curl -X POST "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${{ secrets.WEBHOOK_SEND_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+              "msgtype": "news",
+              "news": {
+                "articles": [
+                  {
+                    "title": "♨️ 【${{ env.FILE_NAME }}】项目编译完成 ♨️",
+                    "description": "- ❀  固件名称：${{ env.FILE_NAME }}-${{ env.REPO_BRANCH }}\n
+                      💻 架构: ${{ env.OpenWrt_ARCH }}
+            
+                      📂 源码: ${{ env.REPO_URL }}
+            
+                      🌳 分支: ${{ env.REPO_BRANCH }}
+            
+                      ⏱️ 编译时间: ${{ env.COMPILE_DATE }}
+            
+                      🌐 管理地址: 192.168.1.11 , 子网掩码: 255.255.255.0
+            
+                      👤 用户名: root
+            
+                      🔒 密码: password 
+                      
+                    "url": "https://github.com/tudaole/OpenWrt-ImmortalWrt-24.10/releases/tag/${{ env.REPO_NAME }}_${{ env.OpenWrt_VERSION }}_${{ env.OpenWrt_ARCH }}"
+                  }
+                ]
+              }
+            }'
