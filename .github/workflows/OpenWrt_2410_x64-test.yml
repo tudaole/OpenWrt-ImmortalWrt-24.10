@@ -132,7 +132,7 @@ jobs:
       - name: 整理固件
         if: steps.compile.outputs.status == 'success' && !cancelled()
         run: |
-          cp -rf openwrt/.config ${{ env.FIRMWARE }}/config
+          cp -rf openwrt/.config ${{ env.FIRMWARE }}/${{ env.FILE_NAME }}-${{ env.COMPILE_DATE }}.config
           cd ${{ env.FIRMWARE }}
           rm -rf packages
           rm -rf *.buildinfo
