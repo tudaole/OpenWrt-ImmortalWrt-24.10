@@ -221,8 +221,8 @@ config_package_add kmod-usb-net-ipheth
 
 # 第三方软件包
 mkdir -p package/custom
-git clone --depth 1 https://github.com/DoTheBetter/OpenWrt-Packages.git package/custom
-#git clone --depth 1 https://github.com/gxnas/OpenWrt_Build_x64_Packages.git package/custom
+#git clone --depth 1 https://github.com/DoTheBetter/OpenWrt-Packages.git package/custom
+git clone --depth 1 https://github.com/kenzok8/small-package.git package/custom
 clean_packages package/custom
 
 # golang
