@@ -221,7 +221,8 @@ config_package_add kmod-usb-net-ipheth
 
 # 第三方软件包
 mkdir -p package/custom
-git clone --depth 1 https://github.com/DoTheBetter/OpenWrt-Packages.git package/custom
+#git clone --depth 1 https://github.com/DoTheBetter/OpenWrt-Packages.git package/custom
+git clone --depth 1 https://github.com/gxnas/OpenWrt_Build_x64_Packages.git package/custom
 clean_packages package/custom
 
 # golang
@@ -246,8 +247,14 @@ config_package_add luci-app-partexp
 config_package_add luci-app-netwizard
 #网络速度测试
 config_package_add luci-app-netspeedtest
+#ssr-plus
+config_package_add luci-app-ssr-plus
+#passwall
+config_package_add luci-app-passwall
+#openclash
+config_package_add luci-app-openclash
 
 ## iStore 应用市场 只支持 x86_64 和 arm64 设备
-##git_sparse_clone main https://github.com/Lienol/openwrt-package luci-app-filebrowser luci-app-ssr-mudb-server
-#git_sparse_clone main https://github.com/linkease/istore luci
-#config_package_add luci-app-store
+git_sparse_clone main https://github.com/Lienol/openwrt-package luci-app-filebrowser luci-app-ssr-mudb-server
+git_sparse_clone main https://github.com/linkease/istore luci
+config_package_add luci-app-store
