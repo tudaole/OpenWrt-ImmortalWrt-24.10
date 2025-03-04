@@ -235,7 +235,7 @@ config_package_add luci-theme-argon
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 ## 定时任务。重启、关机、重启网络、释放内存、系统清理、网络共享、关闭网络、自动检测断网重连、MWAN3负载均衡检测重连、自定义脚本等10多个功能
-config_package_add luci-app-autotimeset
+#config_package_add luci-app-autotimeset
 config_package_add luci-lib-ipkg
 ## 分区扩容。一键自动格式化分区、扩容、自动挂载插件，专为OPENWRT设计，简化OPENWRT在分区挂载上烦锁的操作
 config_package_add luci-app-partexp
@@ -244,9 +244,9 @@ config_package_add luci-app-partexp
 #config_package_add kmod-ip6tables
 #config_package_add luci-app-parentcontrol
 #设置向导
-config_package_add luci-app-netwizard
+#config_package_add luci-app-netwizard
 #网络速度测试
-config_package_add luci-app-netspeedtest
+#config_package_add luci-app-netspeedtest
 #ssr-plus
 config_package_add luci-app-ssr-plus
 #passwall
