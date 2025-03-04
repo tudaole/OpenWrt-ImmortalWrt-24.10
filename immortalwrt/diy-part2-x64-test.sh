@@ -143,7 +143,7 @@ sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.1.11/g' package/base-files/files/bin/config_generate
 # 添加编译时间到版本信息
-sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='${REPO_NAME} ${OpenWrt_VERSION} ${OpenWrt_ARCH} Built on $(date +%Y%m%d)'/" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='GXNAS Build $(date +%Y%m%d)'/" package/base-files/files/etc/openwrt_release
 # 添加编译时间到 /etc/banner
 #echo "Build Time: $(date +%Y%m%d)" >> package/base-files/files/etc/banner
 
@@ -221,8 +221,8 @@ config_package_add kmod-usb-net-ipheth
 
 # 第三方软件包
 mkdir -p package/custom
-#git clone --depth 1 https://github.com/DoTheBetter/OpenWrt-Packages.git package/custom
-git clone --depth 1 https://github.com/gxnas/OpenWrt_Build_x64_Packages.git package/custom
+git clone --depth 1 https://github.com/DoTheBetter/OpenWrt-Packages.git package/custom
+#git clone --depth 1 https://github.com/gxnas/OpenWrt_Build_x64_Packages.git package/custom
 clean_packages package/custom
 
 # golang
